@@ -184,6 +184,145 @@ public class Hotel extends JFrame{
 
         });
 
+        JPanel panel6=new JPanel();
+        panel6.setLayout(new GridLayout(6,2));
+
+        JLabel MidLabel = new JLabel("ID:");
+        JTextField Mid = new JTextField();
+        JLabel MnameLabel = new JLabel("Name:");
+        JTextField Mname = new JPasswordField();
+        JLabel MlastnameLabel = new JLabel("Last Name:");
+        JTextField Mlastname = new JPasswordField();
+        JLabel MEmailLabel = new JLabel("Email:");
+        JTextField MEmail = new JPasswordField();
+        JLabel Mpasswordlabel=new JLabel("Password:");
+        JPasswordField MpasswordField=new JPasswordField();
+        JButton Mlogin = new JButton("LOG IN");
+
+       panel6.setBackground(new Color(218, 207, 240, 175));
+       Mlogin.setBackground(new Color(161, 124, 238, 175));
+
+
+
+        panel6.add(MidLabel);
+        panel6.add(Mid);
+        panel6.add(MnameLabel);
+        panel6.add(Mname);
+        panel6.add(MlastnameLabel);
+        panel6.add(Mlastname);
+        panel6.add(MEmailLabel);
+        panel6.add(MEmail);
+        panel6.add(Mpasswordlabel);
+        panel6.add(MpasswordField);
+        panel6.add(Mlogin);
+
+
+        cardpanel.add(panel6,"Managerlogin");
+
+
+        b1.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+            }
+
+
+        });
+
+       JPanel panel7=new JPanel();
+
+        b2.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+                cardLayout.next(cardpanel);
+            }
+
+
+        });
+
+        panel7.setLayout(new GridLayout(2,1));
+
+
+
+
+        JButton logemployee=new JButton("LOG IN");
+        JButton registeremployee=new JButton("REGISTER");
+
+
+
+
+        panel7.add(logemployee,BorderLayout.CENTER);
+        panel7.add(registeremployee,BorderLayout.CENTER);
+
+        cardpanel.add(panel7,"employee section");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        JPanel panel8 =new JPanel();
+        panel8.setLayout(new GridLayout(8,2));
+
+        JLabel eidLabel = new JLabel("ID:");
+        JTextField eid = new JTextField();
+        JLabel enameLabel = new JLabel("Name:");
+        JTextField ename = new JPasswordField();
+        JLabel elastnameLabel = new JLabel("Last Name:");
+        JTextField elastname = new JPasswordField();
+        JLabel eEmailLabel = new JLabel("Email:");
+        JTextField eEmail = new JPasswordField();
+        JLabel epasswordlabel =new JLabel("Password:");
+        JPasswordField epasswordField =new JPasswordField();
+        JLabel salarylabel = new JLabel("Salary:");
+        JTextField salary = new JPasswordField();
+        JLabel banklabel = new JLabel("Bank account:");
+        JTextField bank = new JPasswordField();
+        JButton eregister = new JButton("Register");
+
+        panel8.setBackground(new Color(218, 207, 240, 175));
+        Mlogin.setBackground(new Color(218, 249, 249, 175));
+
+
+
+        panel8.add(eidLabel);
+        panel8.add(eid);
+        panel8.add(enameLabel);
+        panel8.add(ename);
+        panel8.add(elastnameLabel);
+        panel8.add(elastname);
+        panel8.add(eEmailLabel);
+        panel8.add(eEmail);
+        panel8.add(epasswordlabel);
+        panel8.add(epasswordField);
+        panel8.add(salarylabel);
+        panel8.add(salary);
+        panel8.add(banklabel);
+        panel8.add(bank);
+        panel8.add(eregister);
+
+
+        cardpanel.add(panel8,"Managerlogin");
+
+
 
 
 
