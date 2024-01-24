@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -194,9 +193,8 @@ public class Main {
 
                     String em=Email.getText();
                     String pas = new String(passwordField.getPassword());
-                    emailvalidator emailvalidator=new emailvalidator(em);
 
-                    if(emailvalidator.isvalid(em) && Passwordisvalid(pas))
+                    if( emailisvalid(em) && Passwordisvalid(pas))
                     {
                         String kod = nationalid.getText();
                         String nam = name.getText();
@@ -431,210 +429,257 @@ public class Main {
             JLabel eidLabel = new JLabel("ID:");
             JTextField eid = new JTextField();
             JLabel enameLabel = new JLabel("Name:");
-            JTextField ename = new JPasswordField();
+            JTextField ename = new JTextField();
             JLabel elastnameLabel = new JLabel("Last Name:");
-            JTextField elastname = new JPasswordField();
+            JTextField elastname = new JTextField();
             JLabel eEmailLabel = new JLabel("Email:");
-            JTextField eEmail = new JPasswordField();
+            JTextField eEmail = new JTextField();
             JLabel epasswordlabel =new JLabel("Password:");
             JPasswordField epasswordField =new JPasswordField();
             JLabel salarylabel = new JLabel("Salary:");
-            JTextField salary = new JPasswordField();
+            JTextField salary = new JTextField();
             JLabel banklabel = new JLabel("Bank account:");
-            JTextField bank = new JPasswordField();
+            JTextField bank = new JTextField();
             JButton eregister = new JButton("Register");
             JButton previous7 =new JButton("PREVIOUS PAGE");
             previous7.setBackground(new Color(169, 166, 166));
 
-            panel8.setBackground(new Color(218, 207, 240, 175));
-            Mlogin.setBackground(new Color(218, 249, 249, 175));
+        String addemployee="INSERT INTO employees(personeli,name,lastname,email,password,salary,bankaccount)"+"VALUES(?,?,?,?,?,?,?)";
+        PreparedStatement employeepst=com.prepareStatement(addemployee);
+        eregister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String emailTextem = eEmail.getText();
+                String epas = new String(epasswordField.getPassword());
+
+                if (emailisvalid(emailTextem) && Passwordisvalid(epas)) {
+                    String personelikod = eid.getText();
+                    String enam = ename.getText();
+                    String ekhanevadegi = elastname.getText();
+                    String esalary = salary.getText();
+                    String ebank = bank.getText();
 
 
+                    try {
+                        employeepst.setString(1, personelikod);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
 
-            panel8.add(eidLabel);
-            panel8.add(eid);
-            panel8.add(enameLabel);
-            panel8.add(ename);
-            panel8.add(elastnameLabel);
-            panel8.add(elastname);
-            panel8.add(eEmailLabel);
-            panel8.add(eEmail);
-            panel8.add(epasswordlabel);
-            panel8.add(epasswordField);
-            panel8.add(salarylabel);
-            panel8.add(salary);
-            panel8.add(banklabel);
-            panel8.add(bank);
-            panel8.add(eregister);
+                    try {
+                        employeepst.setString(2, enam);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    try {
+                        employeepst.setString(3, ekhanevadegi);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    try {
+                        employeepst.setString(4, emailTextem);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    try {
+                        employeepst.setString(5, epas);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        employeepst.setString(6,esalary);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        employeepst.setString(7,ebank);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
+                    try {
+                        employeepst.executeUpdate();
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }});
 
 
-            cardpanel.add(panel8,"employeeregister");
+                panel8.setBackground(new Color(218, 207, 240, 175));
+                Mlogin.setBackground(new Color(218, 249, 249, 175));
 
 
-            JPanel panel9 =new JPanel();
-            panel9.setLayout(new GridLayout(3,2));
+                panel8.add(eidLabel);
+                panel8.add(eid);
+                panel8.add(enameLabel);
+                panel8.add(ename);
+                panel8.add(elastnameLabel);
+                panel8.add(elastname);
+                panel8.add(eEmailLabel);
+                panel8.add(eEmail);
+                panel8.add(epasswordlabel);
+                panel8.add(epasswordField);
+                panel8.add(salarylabel);
+                panel8.add(salary);
+                panel8.add(banklabel);
+                panel8.add(bank);
+                panel8.add(eregister);
 
-            JLabel emidLabel = new JLabel("ID:");
-            JTextField emid = new JTextField();
-            JLabel empasswordlabel =new JLabel("Password:");
-            JPasswordField empasswordField =new JPasswordField();
-            JButton emlog=new JButton("LOG IN");
-            JButton previous8 =new JButton("PREVIOUS PAGE");
-            previous8.setBackground(new Color(169, 166, 166));
 
-            panel9.setBackground(new Color(242, 154, 154));
-            emlog.setBackground(new Color(238, 98, 98));
+                cardpanel.add(panel8, "employeeregister");
 
-            panel9.add(emidLabel);
-            panel9.add(emid);
-            panel9.add(empasswordlabel);
-            panel9.add(empasswordField);
-            panel9.add(emlog);
 
-            cardpanel.add(panel9,"employeelogin");
+                JPanel panel9 = new JPanel();
+                panel9.setLayout(new GridLayout(3, 2));
 
-            logemployee.addActionListener(new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
+                JLabel emidLabel = new JLabel("ID:");
+                JTextField emid = new JTextField();
+                JLabel empasswordlabel = new JLabel("Password:");
+                JPasswordField empasswordField = new JPasswordField();
+                JButton emlog = new JButton("LOG IN");
+                JButton previous8 = new JButton("PREVIOUS PAGE");
+                previous8.setBackground(new Color(169, 166, 166));
 
-                    cardLayout.next(cardpanel);
-                    cardLayout.next(cardpanel);
+                panel9.setBackground(new Color(242, 154, 154));
+                emlog.setBackground(new Color(238, 98, 98));
 
+                panel9.add(emidLabel);
+                panel9.add(emid);
+                panel9.add(empasswordlabel);
+                panel9.add(empasswordField);
+                panel9.add(emlog);
+
+                cardpanel.add(panel9, "employeelogin");
+
+                logemployee.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+
+                    }
+
+
+                });
+
+
+                frame.setVisible(true);
+            }
+
+
+            public static boolean emailisvalid(String email) {
+
+                boolean check;
+                Pattern pattern = Pattern.compile("^([_A-Za-z0-9-\\+])+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                Matcher matcher = pattern.matcher(email);
+                if (matcher.matches()) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+                return check;
+            }
+
+
+            public static boolean pass1(String password) {
+                boolean check;
+                Pattern pattern1 = Pattern.compile("([a-z])+");
+                Matcher matcher1 = pattern1.matcher(password);
+                if (matcher1.find()) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+                return check;
+            }
+
+            public static boolean pass2(String password) {
+                boolean check;
+                Pattern pattern2 = Pattern.compile("([A-Z])+");
+                Matcher matcher2 = pattern2.matcher(password);
+                if (matcher2.find()) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+                return check;
+            }
+
+            public static boolean pass3(String password) {
+                boolean check;
+                Pattern pattern3 = Pattern.compile("([0-9])+");
+                Matcher matcher3 = pattern3.matcher(password);
+                if (matcher3.find()) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+                return check;
+            }
+
+            public static boolean pass4(String password) {
+                boolean check;
+                Pattern pattern3 = Pattern.compile("([@#_!])+");
+                Matcher matcher3 = pattern3.matcher(password);
+                if (matcher3.find()) {
+                    check = true;
+                } else {
+                    check = false;
+                }
+                return check;
+            }
+
+
+            private static boolean Passwordisvalid(String password) {
+
+                int counter = 0;
+                boolean isvalid = false;
+                int count = 0;
+                boolean check1 = pass1(password);
+                boolean check2 = pass2(password);
+                boolean check3 = pass3(password);
+                boolean check4 = pass4(password);
+                if (check1 || check2 || check3) {
+                    counter++;
+                }
+                if (check1 && check2) {
+                    counter++;
+                }
+                if (check1 || check2 && check3) {
+                    counter++;
+                }
+                if (check1 || check2 && check4) {
+                    counter++;
                 }
 
+                for (int i = 0; i < password.length(); i++) {
+                    count++;
 
-            });
-
-
-
-
-
-
-
-            frame.setVisible(true);
-        }
-
-
-
-
-    public static boolean emailisvalid(String email) {
-
-            boolean check;
-            Pattern pattern=Pattern.compile("^([A-Za-z0-9])+(.[A-Za-z0-9]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[a-z]{2}$)");
-            Matcher matcher=pattern.matcher(email);
-            if (matcher.matches())
-            {
-                check=true;
+                }
+                if (count > 8) {
+                    counter++;
+                }
+                if (counter > 3) {
+                    isvalid = true;
+                }
+                return isvalid;
             }
-            else {
-                check = false;
-            }
-            return check;
-        }
-
-
-        public static boolean pass1(String password)
-        {
-            boolean check;
-            Pattern pattern1=Pattern.compile("([a-z])+");
-            Matcher matcher1=pattern1.matcher(password);
-            if (matcher1.find())
-            {
-                check=true;
-            }
-            else {
-                check = false;
-            }
-            return check;
-        }
-        public static boolean pass2(String password)
-        {
-            boolean check;
-            Pattern pattern2=Pattern.compile("([A-Z])+");
-            Matcher matcher2=pattern2.matcher(password);
-            if (matcher2.find())
-            {
-                check=true;
-            }
-            else {
-                check=false;
-            }
-            return check;
-        }
-        public static boolean pass3(String password)
-        {
-            boolean check;
-            Pattern pattern3=Pattern.compile("([0-9])+");
-            Matcher matcher3=pattern3.matcher(password);
-            if (matcher3.find()) {
-                check = true;
-            }
-            else {
-                check=false;
-            }
-            return check;
-        }
-        public static boolean pass4(String password)
-        {
-            boolean check;
-            Pattern pattern3=Pattern.compile("([@#_!])+");
-            Matcher matcher3=pattern3.matcher(password);
-            if (matcher3.find())
-            {
-                check=true;
-            }
-            else {
-                check=false;
-            }
-            return check;
-        }
-
-
-
-        private static boolean Passwordisvalid(String password) {
-
-            int counter = 0;
-            boolean isvalid = false;
-            int count = 0;
-            boolean check1 = pass1(password);
-            boolean check2 = pass2(password);
-            boolean check3 = pass3(password);
-            boolean check4 = pass4(password);
-            if (check1 || check2 || check3) {
-                counter++;
-            }
-            if (check1 && check2) {
-                counter++;
-            }
-            if (check1 || check2 && check3) {
-                counter++;
-            }
-            if (check1 || check2 && check4) {
-                counter++;
-            }
-
-            for (int i = 0; i < password.length(); i++) {
-                count++;
-
-            }
-            if (count > 8) {
-                counter++;
-            }
-            if (counter > 3) {
-                isvalid = true;
-            }
-            return isvalid;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
