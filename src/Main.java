@@ -2,12 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.sql.SQLException;
 
 import static com.sun.org.apache.xerces.internal.util.DOMUtil.setVisible;
 
@@ -163,10 +161,50 @@ public class Main {
             panel4.add(loginbtn);
             panel4.add(previous3);
 
+            String searchguest="SELECT * FROM guests";
+            PreparedStatement guestloginpst=com.prepareStatement(searchguest);
+            ResultSet rs=guestloginpst.executeQuery();
+        loginbtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String kodmeli=id.getText();
+                String passlogguest=new String(pass.getPassword());
+              try {
+
+
+                  while (rs.next()) {
+                      if (rs.getString(1).equals(kodmeli) && rs.getString(5).equals(passlogguest)) {
+                          cardLayout.next(cardpanel);
+                          cardLayout.next(cardpanel);
+                          cardLayout.next(cardpanel);
+                          cardLayout.next(cardpanel);
+                          cardLayout.next(cardpanel);
+                          cardLayout.next(cardpanel);
+
+                      }
+                  }
+
+              }
+              catch (SQLException exception)
+              {
+                  System.out.println("error");
+              }
+            }
+
+
+        });
 
 
 
-            panel5.setLayout(new GridLayout(6, 2));
+
+
+
+
+
+
+
+        panel5.setLayout(new GridLayout(6, 2));
 
             JLabel nationalLabel = new JLabel("National ID:");
             JTextField nationalid = new JTextField();
@@ -232,12 +270,15 @@ public class Main {
                         } catch (SQLException ex) {
                             throw new RuntimeException(ex);
                         }
+
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
                     }
 
-
-
                 }
-
 
             });
 
@@ -306,11 +347,11 @@ public class Main {
             JLabel MidLabel = new JLabel("ID:");
             JTextField Mid = new JTextField();
             JLabel MnameLabel = new JLabel("Name:");
-            JTextField Mname = new JPasswordField();
+            JTextField Mname = new JTextField();
             JLabel MlastnameLabel = new JLabel("Last Name:");
-            JTextField Mlastname = new JPasswordField();
+            JTextField Mlastname = new JTextField();
             JLabel MEmailLabel = new JLabel("Email:");
-            JTextField MEmail = new JPasswordField();
+            JTextField MEmail = new JTextField();
             JLabel Mpasswordlabel=new JLabel("Password:");
             JPasswordField MpasswordField=new JPasswordField();
             JButton Mlogin = new JButton("LOG IN");
@@ -334,8 +375,33 @@ public class Main {
             panel6.add(MpasswordField);
             panel6.add(Mlogin);
 
+            String Mpersoneli="2081177021";
+            String Mnam="Maryam";
+            String Mlast="Rahmani";
+            String Maemail="Maryam.Rahmani@gmail.com";
+            String Mpass="33323332Mr";
 
-            cardpanel.add(panel6,"Managerlogin");
+        Mlogin.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String managerpass=new String(MpasswordField.getPassword());
+
+                if(Mid.getText().equals(Mpersoneli) && MEmail.getText().equals(Maemail) && managerpass.equals(Mpass))
+                {
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                }
+
+            }
+        });
+
+
+
+        cardpanel.add(panel6,"Managerlogin");
 
 
             b1.addActionListener(new ActionListener(){
@@ -408,18 +474,6 @@ public class Main {
 
 
             });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -505,6 +559,11 @@ public class Main {
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
+
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
+                    cardLayout.next(cardpanel);
                 }
             }});
 
@@ -553,7 +612,42 @@ public class Main {
                 panel9.add(empasswordField);
                 panel9.add(emlog);
 
-                cardpanel.add(panel9, "employeelogin");
+
+        String searchemployee="SELECT * FROM employees";
+        PreparedStatement employeeloginpst=com.prepareStatement(searchemployee);
+        ResultSet rs1 =employeeloginpst.executeQuery();
+        emlog.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String kodpersoneli =emid.getText();
+                String passlogemployee =new String(empasswordField.getPassword());
+                try {
+
+
+                    while (rs1.next()) {
+                        if (rs1.getString(1).equals(kodpersoneli) && rs1.getString(5).equals(passlogemployee)) {
+                            cardLayout.next(cardpanel);
+                            cardLayout.next(cardpanel);
+                            cardLayout.next(cardpanel);
+
+                        }
+                    }
+
+                }
+                catch (SQLException exception)
+                {
+                    System.out.println("error");
+                }
+            }
+
+
+        });
+
+
+
+
+        cardpanel.add(panel9, "employeelogin");
 
                 logemployee.addActionListener(new ActionListener() {
                     @Override
@@ -566,6 +660,69 @@ public class Main {
 
 
                 });
+
+
+
+                JPanel panel10=new JPanel();
+                panel10.setLayout(new GridLayout(2,1));
+
+                JButton reserve=new JButton("Reserve");
+                JButton returnroom=new JButton("Return");
+
+                reserve.setBackground(new Color(202, 115, 177));
+                returnroom.setBackground(new Color(234, 178, 218));
+
+                panel10.add(reserve);
+                panel10.add(returnroom);
+
+                cardpanel.add(panel10,"guest abilitys");
+
+                JPanel panel11=new JPanel();
+                panel11.setLayout(new GridLayout(8,1));
+
+                JButton seereservations=new JButton("See Reservations");
+                JButton add_employee=new JButton("Add Employee");
+                JButton fire_employee=new JButton("Fire A Employee");
+                JButton changesalary=new JButton("Change The amount Of Salary");
+                JButton changeprice=new JButton("Change a price For A Room");
+                JButton setprice=new JButton(" Set Price For A Room");
+                JButton deactive=new JButton("Deactive A Room");
+                JButton pay=new JButton("Pay A Employee");
+
+
+
+                panel11.add(seereservations);
+                panel11.add(add_employee);
+                panel11.add(fire_employee);
+                panel11.add(changesalary);
+                panel11.add(changeprice);
+                panel11.add(setprice);
+                panel11.add(deactive);
+                panel11.add(pay);
+
+                cardpanel.add(panel11,"Manager abilitys");
+
+
+
+                JPanel panel12=new JPanel();
+                panel12.setLayout(new GridLayout(4,1));
+
+
+                JButton confirmreservations=new JButton("Confirm Reservations");
+                JButton confirmcancle=new JButton("Confirm Cancelations");
+                JButton confirmed=new JButton("See Confirmed Reservations");
+                JButton notconfirmed=new JButton("See Unconfirmed One's");
+
+
+                panel12.add(confirmreservations);
+                panel12.add(confirmcancle);
+                panel12.add(confirmed);
+                panel12.add(notconfirmed);
+
+
+                cardpanel.add(panel12,"Employee abilitys");
+
+
 
 
                 frame.setVisible(true);
