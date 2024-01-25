@@ -495,8 +495,8 @@ public class Main {
             JLabel banklabel = new JLabel("Bank account:");
             JTextField bank = new JTextField();
             JButton eregister = new JButton("Register");
-            JButton previous7 =new JButton("PREVIOUS PAGE");
-            previous7.setBackground(new Color(169, 166, 166));
+
+
 
         String addemployee="INSERT INTO employees(personeli,name,lastname,email,password,salary,bankaccount)"+"VALUES(?,?,?,?,?,?,?)";
         PreparedStatement employeepst=com.prepareStatement(addemployee);
@@ -560,10 +560,7 @@ public class Main {
                         throw new RuntimeException(ex);
                     }
 
-                    cardLayout.next(cardpanel);
-                    cardLayout.next(cardpanel);
-                    cardLayout.next(cardpanel);
-                    cardLayout.next(cardpanel);
+                    cardLayout.previous(cardpanel);
                 }
             }});
 
@@ -587,6 +584,7 @@ public class Main {
                 panel8.add(banklabel);
                 panel8.add(bank);
                 panel8.add(eregister);
+
 
 
                 cardpanel.add(panel8, "employeeregister");
@@ -678,14 +676,13 @@ public class Main {
                 cardpanel.add(panel10,"guest abilitys");
 
                 JPanel panel11=new JPanel();
-                panel11.setLayout(new GridLayout(8,1));
+                panel11.setLayout(new GridLayout(7,1));
 
                 JButton seereservations=new JButton("See Reservations");
                 JButton add_employee=new JButton("Add Employee");
                 JButton fire_employee=new JButton("Fire A Employee");
                 JButton changesalary=new JButton("Change The amount Of Salary");
-                JButton changeprice=new JButton("Change a price For A Room");
-                JButton setprice=new JButton(" Set Price For A Room");
+                JButton changeprice=new JButton("Change price For A Room");
                 JButton deactive=new JButton("Deactive A Room");
                 JButton pay=new JButton("Pay A Employee");
 
@@ -696,7 +693,6 @@ public class Main {
                 panel11.add(fire_employee);
                 panel11.add(changesalary);
                 panel11.add(changeprice);
-                panel11.add(setprice);
                 panel11.add(deactive);
                 panel11.add(pay);
 
@@ -721,6 +717,155 @@ public class Main {
 
 
                 cardpanel.add(panel12,"Employee abilitys");
+
+
+                String searchreserve="SELECT * FROM reservations";
+                PreparedStatement searchreservepst=com.prepareStatement(searchreserve);
+                ResultSet rs2 =searchreservepst.executeQuery();
+
+                JPanel panel13=new JPanel();
+                cardpanel.add(panel13,"see reservations");
+
+                seereservations.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        try {
+                            int i=0;
+                            Object[][] data=new Object[60][6];
+                            while (rs2.next())
+                            {
+                                data[i][0]=rs2.getDate(1);
+                                data[i][1]=rs2.getString(2);
+                                data[i][2]=rs2.getString(3);
+                                data[i][3]=rs2.getString(4);
+                                data[i][4]=rs2.getInt(5);
+                                data[i][5]=rs2.getInt(6);
+                                i++;
+
+                            }
+
+                            String[] cols={"Date","Guest National ID","Price","Employee ID","Time","Number Of The Room"};
+
+                            JTable reservetable=new JTable(data,cols);
+
+                            panel13.add(reservetable);
+
+                            cardLayout.next(cardpanel);
+                            cardLayout.next(cardpanel);
+
+                        }catch (SQLException exception)
+                        {
+                            System.out.println(exception);
+                        }
+
+                    }
+
+
+                });
+
+
+
+                add_employee.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+
+
+                    }
+                });
+
+
+                String delete="DELETE FROM employees WHERE personeli = ?";
+                PreparedStatement deletepst= com.prepareStatement(delete);
+                JPanel panel14=new JPanel();
+                panel14.setLayout(new GridLayout(3,1));
+                JLabel kodpesonelikarmand=new JLabel("Employee ID:");
+                JTextField textFieldkod=new JTextField();
+                JButton deletebtn=new JButton("Delete");
+                deletebtn.setBackground(new Color(161, 124, 238, 175));
+                panel14.setBackground(new Color(218, 207, 240, 175));
+                panel14.add(kodpesonelikarmand);
+                panel14.add(textFieldkod);
+                panel14.add(deletebtn);
+
+                cardpanel.add(panel14,"Fire employee");
+
+                deletebtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            deletepst.setString(1,textFieldkod.getText());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        try {
+                            deletepst.executeUpdate();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                    }
+                });
+
+                fire_employee.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+                        cardLayout.next(cardpanel);
+                    }
+                });
+
+                String changeslry="UPDATE employees SET salary=? WHERE personeli = ?";
+                PreparedStatement slrypst=com.prepareStatement(changeslry);
+                JPanel pane15 =new JPanel();
+                pane15.setLayout(new GridLayout(5,1));
+                JLabel kodpesonelikarmand1 =new JLabel("Employee ID:");
+                JTextField textFieldkod1 =new JTextField();
+                JLabel newsly=new JLabel("New Salary:");
+                JTextField newslrytxt=new JTextField();
+                JButton changebtn=new JButton("Change");
+                changebtn.setBackground(new Color(16, 124, 238, 175));
+                pane15.add(kodpesonelikarmand1);
+                pane15.add(textFieldkod1);
+                pane15.add(newsly);
+                pane15.add(newslrytxt);
+                pane15.add(changebtn);
+
+                changesalary.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        try {
+                            slrypst.setString(1,newslrytxt.getText());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        try {
+                            slrypst.setString(2,textFieldkod1.getText());
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        try {
+                            slrypst.executeUpdate();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                        cardLayout.previous(cardpanel);
+                    }
+                });
 
 
 
